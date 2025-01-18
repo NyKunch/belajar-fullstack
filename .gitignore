@@ -1,0 +1,34 @@
+# Folder node_modules (semua library Node.js)
+node_modules/
+
+# File lingkungan (Environment Variables)
+.env
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# File sistem (MacOS dan Windows)
+.DS_Store
+Thumbs.db
+
+# Direktori build atau output (opsional, tergantung proyek)
+dist/
+build/
+
+# Cache dan file sementara
+*.log
+*.tmp
+.cache/
+*.swp
+*.swo
+
+# File IDE/Editor
+.vscode/
+.idea/
+*.iml
+
+# Kunci jawaban
+solution.js
+solution.ejs
