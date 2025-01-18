@@ -5,6 +5,7 @@ There are 5 method:
 - PUT
 - PATCH
 - DELETE
+
 All of those method can be hit using axios
 
 Today's mistake:
