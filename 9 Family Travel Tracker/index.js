@@ -94,18 +94,19 @@ app.post("/user", async (req, res) => {
     res.render("new.ejs");
   } else {
       currentUserId = req.body.user;
-      const userData = await getCurrentUser(currentUserId);
-      const countries = await checkVisisted(currentUserId);
-      const users = await getAllUsers();
+      // const userData = await getCurrentUser(currentUserId);
+      // const countries = await checkVisisted(currentUserId);
+      // const users = await getAllUsers();
       // console.log(userData);
-      res.render("index.ejs",
-        {
-          countries: countries,
-          total: countries.length,
-          users: users.rows,
-          color: userData.rows[0].color,
-        }
-      )
+      // res.render("index.ejs",
+      //   {
+      //     countries: countries,
+      //     total: countries.length,
+      //     users: users.rows,
+      //     color: userData.rows[0].color,
+      //   }
+      // )
+      res.redirect("/");
   }
 });
 
@@ -118,15 +119,16 @@ app.post("/new", async (req, res) => {
     [req.body.name, req.body.color]
   );
   currentUserId = userData.rows[0].id;
-  const countries = await checkVisisted(currentUserId);
-  const users = await getAllUsers();
-  res.render("index.ejs",
-  {
-    countries: countries,
-    total: countries.length,
-    users: users.rows,
-    color: userData.rows[0].color,
-  })
+  // const countries = await checkVisisted(currentUserId);
+  // const users = await getAllUsers();
+  // res.render("index.ejs",
+  // {
+  //   countries: countries,
+  //   total: countries.length,
+  //   users: users.rows,
+  //   color: userData.rows[0].color,
+  // })
+  res.redirect("/");
 });
 
 app.listen(port, () => {
