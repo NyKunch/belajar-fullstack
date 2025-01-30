@@ -20,31 +20,42 @@ app.use(express.static("public"));
 let items = [];
 
 async function getAllItems(){
-  const items = await db.query("SELECT * FROM items");
+  const items = await db.query("SELECT * FROM items ORDER BY id ASC");
   return items.rows;
 };
 
 app.get("/", async (req, res) => {
-  items = await getAllItems();
-  // console.log(items);
-  res.render("index.ejs", {
-    listTitle: "Today",
-    listItems: items,
-  });
+  try {
+    items = await getAllItems();
+    res.render("index.ejs", {
+      listTitle: "Today",
+      listItems: items,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/add", async (req, res) => {
   const item = req.body.newItem;
-  await db.query("INSERT INTO items(title) VALUES ($1)",
-    [item]);
+  try {
+    await db.query("INSERT INTO items(title) VALUES ($1)",
+      [item]);
+  } catch (error) {
+    console.log(error);
+  }
   res.redirect("/");
 });
 
 app.post("/edit", async (req, res) => {
-  const newTitle = req.body.updatedItemTitle;
-  const itemId = req.body.updatedItemId;
-  await db.query("UPDATE items SET title = $1 WHERE id = $2",
-    [newTitle, itemId]);
+  try {
+    const newTitle = req.body.updatedItemTitle;
+    const itemId = req.body.updatedItemId;
+    await db.query("UPDATE items SET title = $1 WHERE id = $2",
+      [newTitle, itemId]);
+  } catch (error) {
+    console.log(error);
+  }
   res.redirect("/");
 });
 
