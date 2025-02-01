@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+import bcrypt from "bcrypt";
 
 const app = express();
 const port = 3000;
@@ -13,22 +14,6 @@ const db = new pg.Client({
 });
 
 db.connect();
-
-async function checkLogin(username, password){
-    try {
-        const result = await db.query(
-            "SELECT * FROM users WHERE username = $1 RETURNING password",
-            [username]
-        );
-        if (result.rows.password == password){
-            return true;
-        } else {
-            return false;
-        }
-    } catch (error) {
-        return false;
-    }
-}
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -50,11 +35,11 @@ app.get("/submit", (req, res) => {
 })
 
 app.post("/register", async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+    const {username, password} = req.body;
+    const hash = await bcrypt.hash(password, 13);
     try {
         await db.query("INSERT INTO users(username, password) VALUES ($1, $2)",
-            [username, password]);
+            [username, hash]);
     } catch (error) {
         console.log(error);
     }
@@ -62,14 +47,22 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.pasword;
-    const isLogin = checkLogin(username, password);
-
-    if(isLogin){
+    const {username, password} = req.body;
+    
+    try {
+        const result = await db.query(
+            "SELECT password FROM users WHERE username = $1",
+            [username]
+        );
+        const isLogin = await bcrypt.compare(password, result.rows[0].password)
+        if(!isLogin){
+            console.log("Login failed");
+            res.redirect("/login");
+        }
         res.render("secrets.ejs");
-    } else {
-        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+        res.redirect("/login");
     }
 })
 
