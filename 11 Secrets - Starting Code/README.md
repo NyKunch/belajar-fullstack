@@ -6,9 +6,9 @@ The project: Make secret website that needed the user to login to access the sec
 
 Project Progress: 
 - Level 1 (Normal Username and Password Login)
-- Level 2 (Use bcrypt module to hash user's password) <-- Current
-- Level 3
-- Level 4
-- Level 5
+- Level 2 (Use password encryption)
+- Level 3 (Use password hashing)
+- Level 4 (Add salt and hash user's password, with bcrypt)
+- Level 5 (Use session and authentication) <-- Current
 - Level 6
 
