@@ -8,8 +8,10 @@ import pg from "pg";
 // import { Pool } from 'pg';
 import connectPgSimple from 'connect-pg-simple';
 import bcrypt from "bcrypt";
+import passportGoogle from 'passport-google-oauth20';
 
 const localStrategy = passportLocal.Strategy;
+const GoogleStrategy = passportGoogle.Strategy;
 const pgSession = connectPgSimple(session);
 
 const app = express();
@@ -27,8 +29,6 @@ pool.connect();
 // const pool = new pg({
 //     // connectionString: process.env.DATABASE_URL,
 // });
-
-
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -70,6 +70,33 @@ passport.use(
     })
 );
 
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: "http://localhost:3000/auth/google/callback"
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                let result = await pool.query(
+                    "SELECT * FROM users WHERE google_id = $1",
+                    [profile.id]
+                );
+                if (result.rows.length === 0){
+                    result = await pool.query(
+                        "INSERT INTO users (username, google_id) VALUES ($1, $2) RETURNING *",
+                        [profile.displayName, profile.id]
+                    );
+                }
+                return done(null, result.rows[0]);
+            } catch (error) {
+                return done(error);
+            }
+        }
+    )
+);
+
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
     const result = await pool.query(
@@ -95,6 +122,18 @@ app.get("/register", (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login.ejs");
 });
+
+app.get("/auth/google", passport.authenticate("google", {scope: ["profile"]}));
+
+app.get(
+    "/auth/google/callback",
+    passport.authenticate(
+        "google",
+        {
+            successRedirect: "/secret",
+            failureRedirect: "/login"
+        })
+    );
 
 app.get("/submit", (req, res) => {
     res.render("submit.ejs");
