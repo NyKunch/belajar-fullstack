@@ -111,6 +111,14 @@ function ensureAuthenticated(req, res, next) {
     res.redirect("/login");
 }
 
+async function generateSecrets() {
+    const result = await pool.query(
+        "SELECT secret FROM users"
+    );
+    const secrets = result.rows.map((row) => row.secret);
+    return secrets;
+}
+
 app.get("/", (req, res) => {
     res.render("home.ejs");
 });
@@ -139,8 +147,12 @@ app.get("/submit", (req, res) => {
     res.render("submit.ejs");
 });
 
-app.get("/secret", ensureAuthenticated, (req, res) => {
-    res.render("secrets.ejs");
+app.get("/secret", ensureAuthenticated, async (req, res) => {
+    const userSecrets = await generateSecrets();
+    res.render("secrets.ejs",
+    {
+        userSecrets: userSecrets
+    });
 });
 
 app.get("/logout", (req, res) => {
@@ -192,10 +204,26 @@ app.post(
     })
 );
 
+app.post(
+    "/submit",
+    async (req, res) => {
+        const newSecret = req.body.secret;
+        const currentUserId = req.user.id;
+        try {
+            await pool.query(
+                "UPDATE users SET secret = $1 WHERE id = $2",
+                [newSecret, currentUserId]
+            );
+        } catch (error) {
+            console.log(error);
+        }
+        res.redirect("/secret")
+    }
+)
 
-// app.post("/submit", (req, res) => {
-
-// });
+app.get("/submit", ensureAuthenticated, (req, res) => {
+    res.render("submit.ejs");
+});
 
 app.listen(port, (req, res) => {
     console.log(`App running on port ${port}`);

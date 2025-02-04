@@ -9,6 +9,6 @@ Project Progress:
 - Level 2 (Use password encryption)
 - Level 3 (Use password hashing)
 - Level 4 (Add salt and hash user's password, with bcrypt)
-- Level 5 (Use session and authentication with Google OAuth 2.0) <-- Current
-- Level 6
+- Level 5 (Use session and authentication locally)
+- Level 6 (Use session and authentication with Google OAuth 2.0) <-- Current
 
