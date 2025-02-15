@@ -10,25 +10,31 @@ export default function App() {
   //   setHeadingName(name)
   //   event.preventDefault()
   // }
-  const [fullName, setFullName] = React.useState({
+  const [contact, setContact] = React.useState({
     fName: "",
-    lName: ""
+    lName: "",
+    email: ""
   })
 
   function handleNameChange(event) {
     const {value, name} = event.target
-    setFullName((prevValue) => {
+    setContact((prevValue) => {
       return name === 'fName' ?
-      {fName: value, lName: prevValue.lName} :
-      {fName: prevValue.fName, lName: value} 
+      {fName: value, lName: prevValue.lName, email: prevValue.email} :
+      name === 'lName' ?
+      {fName: prevValue.fName, lName: value, email: prevValue.email} :
+      {fName: prevValue.fName, lName: prevValue.lName, email: value}
     })
   }
 
   return (
     <div className="container">
       <h1>
-        Hello {fullName.fName} {fullName.lName}
+        Hello {contact.fName} {contact.lName}
       </h1>
+      <p>
+        {contact.email}
+      </p>
       <form
         // onSubmit={changeHeadingName}
       >
@@ -37,14 +43,21 @@ export default function App() {
           type="text" 
           placeholder="First Name" 
           onChange={handleNameChange}
-          value={fullName.fName}
+          value={contact.fName}
         />
         <input 
           name="lName"
           type="text" 
           placeholder="Last Name" 
           onChange={handleNameChange}
-          value={fullName.lName}
+          value={contact.lName}
+        />
+        <input 
+          name="email"
+          type="text" 
+          placeholder="Email" 
+          onChange={handleNameChange}
+          value={contact.email}
         />
         <button type="submit">
           Submit
