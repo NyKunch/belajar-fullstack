@@ -1,4 +1,5 @@
 import React from "react";
+import ToDoList from "./ToDoList"
 
 export default function App() {
   const [inputItem, setInputItem] = React.useState("")
@@ -35,7 +36,7 @@ export default function App() {
       </div>
       <div>
         <ul>
-          {listItem.map(item => <li>{item}</li>)}
+          {listItem.map((item, index) => <ToDoList key={index} listTitle={item} />)}
         </ul>
       </div>
     </div>
