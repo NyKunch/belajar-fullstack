@@ -16,14 +16,25 @@ export default function App() {
     email: ""
   })
 
+  // function handleNameChange(event) {
+  //   const {value, name} = event.target
+  //   setContact((prevValue) => {
+  //     return name === 'fName' ?
+  //     {fName: value, lName: prevValue.lName, email: prevValue.email} :
+  //     name === 'lName' ?
+  //     {fName: prevValue.fName, lName: value, email: prevValue.email} :
+  //     {fName: prevValue.fName, lName: prevValue.lName, email: value}
+  //   })
+  // }
+
+  // Using spread operator
   function handleNameChange(event) {
     const {value, name} = event.target
     setContact((prevValue) => {
-      return name === 'fName' ?
-      {fName: value, lName: prevValue.lName, email: prevValue.email} :
-      name === 'lName' ?
-      {fName: prevValue.fName, lName: value, email: prevValue.email} :
-      {fName: prevValue.fName, lName: prevValue.lName, email: value}
+      return {
+        ...prevValue,
+        [name]:value
+      }
     })
   }
 
