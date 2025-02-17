@@ -14,7 +14,16 @@ export default function App() {
       [...prevValue, inputItem]
     )
     setInputItem("")
-    console.log(listItem);
+  }
+
+  function deleteItem() {
+    setListItem(prevItems => {
+      return prevItems.filter(
+        (item, index) => {
+          return index !== id
+        }
+      )
+    })
   }
 
   return (
@@ -36,7 +45,14 @@ export default function App() {
       </div>
       <div>
         <ul>
-          {listItem.map((item, index) => <ToDoList key={index} listTitle={item} />)}
+          {listItem.map((item, index) => 
+            <ToDoList 
+              key={index} 
+              id={index}
+              listTitle={item} 
+              onChecked={deleteItem}
+            />
+          )}
         </ul>
       </div>
     </div>
