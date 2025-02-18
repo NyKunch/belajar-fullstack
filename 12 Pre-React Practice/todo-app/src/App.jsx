@@ -1,5 +1,6 @@
 import React from "react";
 import ToDoList from "./ToDoList"
+import InputArea from "./InputArea"
 
 export default function App() {
   const [inputItem, setInputItem] = React.useState("")
@@ -16,7 +17,7 @@ export default function App() {
     setInputItem("")
   }
 
-  function deleteItem() {
+  function deleteItem(id) {
     setListItem(prevItems => {
       return prevItems.filter(
         (item, index) => {
@@ -32,10 +33,9 @@ export default function App() {
         <h1>To-Do List</h1>
       </div>
       <div className="form">
-        <input 
-          type="text" 
-          onChange={handleChange}
-          value={inputItem}
+        <InputArea 
+          handleChange={handleChange}
+          inputItem={inputItem}
         />
         <button
           onClick={buttonClick}
