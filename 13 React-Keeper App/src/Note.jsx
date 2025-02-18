@@ -10,6 +10,7 @@ export default function Note(props) {
                 <p>
                     {props.content}
                 </p>
+                <button onClick={() => props.onDelete(props.id)}>DELETE</button>
             </div>
         </>
     )
