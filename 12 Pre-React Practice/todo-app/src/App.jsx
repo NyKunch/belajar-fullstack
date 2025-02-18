@@ -3,18 +3,12 @@ import ToDoList from "./ToDoList"
 import InputArea from "./InputArea"
 
 export default function App() {
-  const [inputItem, setInputItem] = React.useState("")
   const [listItem, setListItem] = React.useState([])
 
-  function handleChange(event) {
-    setInputItem(event.target.value)
-  }
-
-  function buttonClick() {
+  function buttonClick(inputItem) {
     setListItem(prevValue => 
       [...prevValue, inputItem]
     )
-    setInputItem("")
   }
 
   function deleteItem(id) {
@@ -34,14 +28,8 @@ export default function App() {
       </div>
       <div className="form">
         <InputArea 
-          handleChange={handleChange}
-          inputItem={inputItem}
+          onAdd={buttonClick}
         />
-        <button
-          onClick={buttonClick}
-        >
-          <span>Add</span>
-        </button>
       </div>
       <div>
         <ul>
