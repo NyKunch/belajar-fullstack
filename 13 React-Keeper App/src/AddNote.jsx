@@ -1,4 +1,7 @@
 import React from "react"
+import AddIcon from '@mui/icons-material/Add'
+import Zoom from '@mui/material/Zoom'
+import Fab from '@mui/material/Fab'
 
 export default function AddNote(props) {
     const [notes, setNotes] = React.useState(
@@ -7,6 +10,8 @@ export default function AddNote(props) {
             content: ""
         }
     )
+
+    const [isFocus, setIsFocus] = React.useState(false)
 
     function handleChange(event) {
         const {name, value} = event.target
@@ -27,23 +32,32 @@ export default function AddNote(props) {
         event.preventDefault()
     }
 
+    function handleFocus() {
+        setIsFocus(true)
+    }
+
     return (
         <div>
-            <form>
-                <input 
+            <form className="create-note">
+                {isFocus && <input 
                     name="title"
                     placeholder="Title"
                     onChange={handleChange}
                     value={notes.title}
-                />
+                />}
                 <textarea 
                     name="content"
                     placeholder="Take a note.."
-                    rows="3"
+                    rows={isFocus ? "3" : "1"}
                     onChange={handleChange}
                     value={notes.content}
+                    onFocus={handleFocus}
                 />
-                <button onClick={submitNote}>Add</button>
+            <Zoom in={isFocus ? true : false}>
+                <Fab onClick={submitNote}>
+                    <AddIcon />
+                </Fab>
+            </Zoom>
             </form>
         </div>
     )
