@@ -10,7 +10,7 @@ const App = () => {
   return (
     <Container>
       {!isSubmit && <InputSection onSubmit={setCvData} setVisibility={setIsSubmit}/>}
-      <FormOutput data={cvData} />
+      {isSubmit && <FormOutput data={cvData} setVisibility={setIsSubmit} />}
     </Container>
   )
 }
