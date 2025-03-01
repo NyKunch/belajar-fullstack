@@ -1,20 +1,15 @@
 import Card from "./Card"
 
-const CardSection = () => {
+const CardSection = ({ pokemonsData }) => {
     return (
         <div className="card-container">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {pokemonsData.map((pokemon) => 
+                <Card 
+                    key={pokemon.id}
+                    imgSrc={pokemon.sprites.front_default}
+                    pokeName={pokemon.name}
+                />
+            )}
         </div>
     )
 }

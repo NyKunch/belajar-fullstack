@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+@font-face {
+    font-family: 'Pokemon';
+    src: url('/fonts/Pokemon Solid.ttf') format('truetype');
+}
+
+
 * {
     text-decoration: none;
     padding: 0;
@@ -8,6 +15,25 @@
 .container {
     width: 95%;
     margin: 0 auto;
+    font-family: 'Fredoka', sans-serif;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.game-title {
+    float: left;
+}
+
+.game-title h1 {
+    margin: 10px 0 20px 0;
+    font-family: 'Pokemon', sans-serif;
+    font-size: 60px;
+}
+
+.score-board {
+    float: right;
 }
 
 .card-container {
@@ -20,13 +46,17 @@
 .card {
     width: calc(24% - 8px);
     background-color: lightgray;
-    padding: 16px;
+    padding: 8px;
     text-align: center;
     /* height: 250px; */
-    border-radius: 7px;
+    border-radius: 14px;
 }
 
 .card img {
     width: 100%;
-    border-radius: 5px;
+    border-radius: 8px;
+}
+
+.card h3 {
+    padding: 10px 0;
 }

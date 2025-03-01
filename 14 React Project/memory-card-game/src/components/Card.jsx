@@ -1,9 +1,9 @@
-const Card = () => {
+const Card = ({ imgSrc, pokeName }) => {
     return (
         <div className='card'>
-            <img src='https://picsum.photos/300/400' alt='Random Img'/>
+            <img src={imgSrc} alt={pokeName}/>
             <h3>
-                Nama Pokemon
+                {pokeName}
             </h3>
         </div>
     )
