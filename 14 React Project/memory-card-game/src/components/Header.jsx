@@ -1,4 +1,4 @@
-const Header = () => {
+const Header = ({ score, highscore }) => {
     return (
         <header>
             <div className='game-title'>
@@ -10,8 +10,8 @@ const Header = () => {
                 </p>
             </div>
             <div className='score-board'>
-                <p>Point: 0</p>
-                <p>Highscore: 0</p>
+                <p>Point: {score}</p>
+                <p>Highscore: {highscore}</p>
             </div>
             <div style={{clear: 'both'}} />
         </header>

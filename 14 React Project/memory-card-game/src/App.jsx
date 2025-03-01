@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 
 const App = () => {
   const [pokemons, setPokemons] = useState([])
+  const [score, setScore] = useState(0)
+  const [highscore, setHighscore] = useState(0)
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=12')
@@ -18,12 +20,24 @@ const App = () => {
       .catch((error) => console.error('Error fetching data: ', error))
   }, [])
 
-  console.log(pokemons);
+  const shufflePokemon = () => {
+    setPokemons([...pokemons].sort(() => Math.random() - 0.5))
+  }
 
   return (
     <div className='container'>
-      <Header />
-      <CardSection pokemonsData={pokemons} />
+      <Header 
+        score={score} 
+        highscore={highscore}
+      />
+      <CardSection 
+        pokemonsData={pokemons} 
+        score={score}
+        handleScore={setScore}
+        highscore={highscore}
+        handleHighscore={setHighscore}
+        shuffle={shufflePokemon}
+      />
     </div>
   )
 }
