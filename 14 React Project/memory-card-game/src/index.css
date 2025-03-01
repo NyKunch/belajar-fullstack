@@ -1,0 +1,32 @@
+* {
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.card {
+    width: calc(24% - 8px);
+    background-color: lightgray;
+    padding: 16px;
+    text-align: center;
+    /* height: 250px; */
+    border-radius: 7px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 5px;
+}
